@@ -23,6 +23,9 @@ public class Planet {
         this.terrain = terrain;
     }
 
+    public Planet(String climate, String terrain) {
+    }
+
     public Long getId() {
         return id;
     }

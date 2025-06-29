@@ -1,10 +1,16 @@
 package com.example.sw_planet_api.domain;
 
+import org.springframework.data.domain.Example;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.QueryByExampleExecutor;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface PlanetRepository extends CrudRepository<Planet, Long> {
+public interface PlanetRepository extends CrudRepository<Planet, Long>, QueryByExampleExecutor<Planet> {
     Optional<Planet> findByName(String name);
+
+    @Override
+    <S extends Planet> List findAll(Example<S> example);
     void deleteById(Long id);
 }

@@ -3,7 +3,9 @@ package com.example.sw_planet_api.web;
 import com.example.sw_planet_api.domain.Planet;
 import com.example.sw_planet_api.domain.PlanetRepository;
 import com.example.sw_planet_api.domain.PlanetService;
+import com.example.sw_planet_api.domain.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +45,13 @@ public class PlanetController {
     public ResponseEntity<Planet> getByName(@PathVariable String name) {
         return planetService.getByName(name).map(planet -> ResponseEntity.ok(planet))
             .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<List<Planet>> getByName(@RequestParam(required = false) String terrain,
+                                                  @RequestParam(required = false) String climate) {
+        List<Planet> planets = planetService.list(terrain, climate);
+        return ResponseEntity.ok(planets);
     }
 
     @DeleteMapping("/{id}")

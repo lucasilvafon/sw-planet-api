@@ -12,5 +12,6 @@ public interface PlanetRepository extends CrudRepository<Planet, Long>, QueryByE
 
     @Override
     <S extends Planet> List findAll(Example<S> example);
+
     void deleteById(Long id);
 }

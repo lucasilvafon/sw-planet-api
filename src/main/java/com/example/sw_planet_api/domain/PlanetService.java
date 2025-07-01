@@ -34,9 +34,7 @@ public class PlanetService {
         return planetRepository.findAll(query);
     }
 
-    public Optional<Planet> deleteById(Long id) {
-        Optional<Planet> planet = planetRepository.findById(id);
-        planet.ifPresent(planetRepository::delete);
-        return planet;
+    public void deleteById(Long id) {
+        planetRepository.deleteById(id);
     }
 }

@@ -50,11 +50,8 @@ public class PlanetController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
-        Optional<Planet> planet = planetService.deleteById(id);
-
-        return planet.isPresent()
-                ? ResponseEntity.ok("Planeta excluído com sucesso")
-                : ResponseEntity.status(HttpStatus.NOT_FOUND).body("Planeta não encontrado");
+        planetService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
 

@@ -17,6 +17,7 @@ import static com.example.sw_planet_api.common.PlanetConstants.PLANET;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 //@SpringBootTest(classes = PlanetService.class)
@@ -108,5 +109,18 @@ public class PlanetServiceTest {
         List<Planet> sut = planetService.list(PLANET.getTerrain(), PLANET.getClimate());
 
         assertThat(sut).isEmpty();
+    }
+
+
+    @Test
+    public void deletePlanetIdExist(){
+        assertThatCode( () -> planetService.deleteById(1L)).doesNotThrowAnyException();
+    }
+
+    @Test
+    public void deletePlanetIdUnexistent(){
+        doThrow(new RuntimeException()).when(planetRepository).deleteById(99L);
+
+        assertThatThrownBy(() -> planetService.deleteById(99L)).isInstanceOf(RuntimeException.class);
     }
 }

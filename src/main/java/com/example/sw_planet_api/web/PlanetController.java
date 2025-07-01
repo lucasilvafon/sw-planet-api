@@ -30,9 +30,10 @@ public class PlanetController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Planet>> getAll() {
-        List<Planet> allPlanets = (List<Planet>) repository.findAll();
-        return ResponseEntity.ok(allPlanets);
+    public ResponseEntity<List<Planet>> list(@RequestParam(required = false) String terrain,
+                                             @RequestParam(required = false) String climate) {
+        List<Planet> planets = planetService.list(terrain, climate);
+        return ResponseEntity.ok(planets);
     }
 
     @GetMapping("/{id}")
@@ -45,13 +46,6 @@ public class PlanetController {
     public ResponseEntity<Planet> getByName(@PathVariable String name) {
         return planetService.getByName(name).map(planet -> ResponseEntity.ok(planet))
             .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/name/{name}")
-    public ResponseEntity<List<Planet>> getByName(@RequestParam(required = false) String terrain,
-                                                  @RequestParam(required = false) String climate) {
-        List<Planet> planets = planetService.list(terrain, climate);
-        return ResponseEntity.ok(planets);
     }
 
     @DeleteMapping("/{id}")
